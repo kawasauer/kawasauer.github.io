@@ -1,0 +1,1439 @@
+/* =========================================================
+   MISSÃO INCLUSÃO
+   CSS - VISUAL PROFISSIONAL / ACESSÍVEL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #050a12;
+    --bg2: #091321;
+
+    --panel: #101d30;
+    --panel-light: #172941;
+    --panel-card: #1a2e49;
+
+    --blue: #397cff;
+    --blue-light: #72b4ff;
+
+    --green: #48d597;
+    --yellow: #ffbd4a;
+    --red: #ff6575;
+
+    --text: #ffffff;
+    --muted: #c7d5e9;
+    --muted2: #91a7c4;
+
+    --border: #2c4668;
+    --border-light: #41678f;
+}
+
+/* =========================================================
+   BASE
+========================================================= */
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% -15%,
+            #244c80 0%,
+            #0b1727 42%,
+            #04080e 80%
+        );
+
+    color: var(--text);
+
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   ACESSIBILIDADE - FOCO
+========================================================= */
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease,
+        background 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.12);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 4px;
+}
+
+/* =========================================================
+   TELAS
+========================================================= */
+
+.screen {
+    display: none;
+
+    width: 100%;
+    min-height: 100vh;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* =========================================================
+   MENU PRINCIPAL
+========================================================= */
+
+#startScreen {
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    position: relative;
+}
+
+/* brilho decorativo */
+
+#startScreen::before {
+    content: "";
+
+    position: fixed;
+
+    width: 500px;
+    height: 500px;
+
+    border-radius: 50%;
+
+    background: rgba(57, 124, 255, 0.08);
+
+    filter: blur(80px);
+
+    top: -200px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    pointer-events: none;
+}
+
+/* cartão */
+
+.start-container {
+    position: relative;
+    z-index: 1;
+
+    width: min(900px, 100%);
+
+    padding: 50px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(23, 47, 79, 0.98),
+            rgba(7, 15, 27, 0.99)
+        );
+
+    border: 1px solid #4c87d7;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 30px 100px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* linha superior */
+
+.start-container::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 12%;
+
+    width: 76%;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #72b4ff,
+            transparent
+        );
+
+    opacity: 0.8;
+}
+
+.logo-icon {
+    font-size: 76px;
+
+    margin-bottom: 8px;
+
+    filter:
+        drop-shadow(0 0 20px rgba(90, 170, 255, 0.45));
+}
+
+.eyebrow {
+    color: #8ec1ff;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 10px;
+}
+
+.start-container h1 {
+    font-size: clamp(34px, 6vw, 52px);
+
+    letter-spacing: 4px;
+
+    margin-bottom: 15px;
+
+    text-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.45);
+}
+
+.subtitle {
+    max-width: 700px;
+
+    margin: 0 auto 32px;
+
+    color: #cfdbec;
+
+    font-size: 19px;
+
+    line-height: 1.6;
+}
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+.start-buttons {
+    width: min(500px, 100%);
+
+    margin: auto;
+}
+
+.main-button,
+.secondary-button {
+    width: 100%;
+
+    border-radius: 13px;
+
+    font-weight: bold;
+}
+
+/* botão principal */
+
+.main-button {
+    padding: 17px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4a88ff,
+            #2868e8
+        );
+
+    color: white;
+
+    font-size: 22px;
+
+    margin-bottom: 12px;
+
+    box-shadow:
+        0 8px 25px rgba(57, 124, 255, 0.25);
+}
+
+.main-button:hover {
+    box-shadow:
+        0 12px 30px rgba(57, 124, 255, 0.38);
+}
+
+/* botão secundário */
+
+.secondary-button {
+    padding: 15px 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #263d5d,
+            #1c2e48
+        );
+
+    color: #ffffff;
+
+    border: 1px solid #5879a8;
+
+    font-size: 16px;
+
+    margin-bottom: 10px;
+}
+
+.secondary-button:hover {
+    background: #2d4568;
+}
+
+/* botão perigo */
+
+.menu-danger-button {
+    width: 100%;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #552b35,
+            #40212a
+        );
+
+    color: white;
+
+    border: 1px solid #a95765;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+/* =========================================================
+   CARACTERÍSTICAS
+========================================================= */
+
+.feature-list {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-top: 27px;
+}
+
+.feature-list div {
+    padding: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #172b47,
+            #13233a
+        );
+
+    border: 1px solid #2c4668;
+
+    border-radius: 10px;
+
+    color: #d7e2f7;
+
+    font-size: 14px;
+
+    transition:
+        transform 0.15s,
+        border-color 0.15s,
+        background 0.15s;
+}
+
+.feature-list div:hover {
+    transform: translateY(-2px);
+
+    border-color: #4f7eb4;
+
+    background: #1c3453;
+}
+
+.start-tip {
+    margin-top: 20px;
+
+    color: #91a7c4;
+
+    font-size: 13px;
+}
+
+/* =========================================================
+   TELA DO JOGO
+========================================================= */
+
+#gameScreen {
+    flex-direction: column;
+
+    align-items: center;
+
+    padding: 10px;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #0d1c31,
+            #050a12 55%
+        );
+}
+
+/* =========================================================
+   HUD SUPERIOR
+========================================================= */
+
+.game-header {
+    width: min(1080px, 100%);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #14253d,
+            #0e1a2b
+        );
+
+    padding: 11px 14px;
+
+    border-radius: 15px 15px 0 0;
+
+    border: 1px solid #2c4668;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.phase-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    min-width: 0;
+}
+
+#phaseNumber {
+    background:
+        linear-gradient(
+            135deg,
+            #4b8aff,
+            #2d69dd
+        );
+
+    padding: 8px 12px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+
+    box-shadow:
+        0 4px 14px rgba(57, 124, 255, 0.25);
+}
+
+.title-area {
+    min-width: 0;
+}
+
+#phaseTheme {
+    display: block;
+
+    color: #87a9d4;
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.2px;
+
+    margin-bottom: 2px;
+}
+
+#missionTitle {
+    font-size: 21px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.game-buttons {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.game-buttons button {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #294464,
+            #203652
+        );
+
+    color: #ffffff;
+
+    font-size: 18px;
+
+    border: 1px solid #3a5b82;
+}
+
+.game-buttons button:hover {
+    background: #315276;
+}
+
+.game-buttons #hintButton {
+    background:
+        linear-gradient(
+            135deg,
+            #82622b,
+            #5f461e
+        );
+
+    border-color: #b99042;
+}
+
+#lives {
+    font-size: 19px;
+
+    margin-right: 3px;
+
+    white-space: nowrap;
+}
+
+/* =========================================================
+   OBJETIVO
+========================================================= */
+
+.objective-box {
+    width: min(1080px, 100%);
+
+    display: flex;
+
+    gap: 12px;
+
+    align-items: center;
+
+    padding: 13px 17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #192d48,
+            #13243a
+        );
+
+    border-left: 5px solid #5aa5ff;
+
+    line-height: 1.45;
+
+    box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.objective-box strong {
+    display: block;
+
+    color: #8ec1ff;
+
+    font-size: 13px;
+
+    letter-spacing: 0.5px;
+
+    margin-bottom: 2px;
+}
+
+.objective-icon {
+    font-size: 27px;
+
+    filter:
+        drop-shadow(
+            0 0 7px rgba(90, 165, 255, 0.35)
+        );
+}
+
+/* =========================================================
+   BARRA DE PROGRESSO
+========================================================= */
+
+.progress-wrap {
+    width: min(1080px, 100%);
+
+    height: 7px;
+
+    background: #08111e;
+
+    border-left: 1px solid #324b6d;
+    border-right: 1px solid #324b6d;
+
+    overflow: hidden;
+}
+
+#progressBar {
+    height: 100%;
+
+    width: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            #397cff,
+            #48d597
+        );
+
+    box-shadow:
+        0 0 12px rgba(72, 213, 151, 0.5);
+
+    transition:
+        width 0.3s ease;
+}
+
+/* =========================================================
+   CANVAS
+========================================================= */
+
+.game-wrapper {
+    width: min(1080px, 100%);
+
+    background: #0b1524;
+
+    border-left: 1px solid #324b6d;
+    border-right: 1px solid #324b6d;
+
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.3);
+}
+
+canvas {
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    touch-action: none;
+}
+
+/* =========================================================
+   PAINEL DE STATUS
+========================================================= */
+
+.status-panel {
+    width: min(1080px, 100%);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 7px;
+
+    padding: 8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #101d30,
+            #0d1828
+        );
+}
+
+.status-panel div {
+    padding: 9px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1c304c,
+            #172941
+        );
+
+    border: 1px solid #2c4668;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    color: #dce8f9;
+
+    transition:
+        border-color 0.2s,
+        background 0.2s;
+}
+
+.status-panel div:hover {
+    border-color: #42688f;
+}
+
+#doorStatus {
+    font-weight: bold;
+}
+
+/* =========================================================
+   MENSAGEM
+========================================================= */
+
+#messageBox {
+    width: min(1080px, 100%);
+
+    min-height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 10px 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #101e31,
+            #0c1727
+        );
+
+    color: #e1ecff;
+
+    font-weight: bold;
+
+    border-radius: 0 0 10px 10px;
+
+    border: 1px solid #243c5d;
+
+    box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.03);
+}
+
+/* =========================================================
+   CONTROLES DE TOQUE
+========================================================= */
+
+#touchControls {
+    display: none;
+
+    text-align: center;
+
+    margin-top: 12px;
+}
+
+#touchControls button {
+    width: 62px;
+    height: 62px;
+
+    margin: 3px;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #304f79,
+            #263f61
+        );
+
+    color: #ffffff;
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    border: 1px solid #557ca8;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#touchControls button:active {
+    background: #3c6393;
+
+    transform: scale(0.96);
+}
+
+#touchHint {
+    display: none;
+
+    margin-top: 8px;
+
+    color: #afc3df;
+
+    text-align: center;
+
+    font-size: 13px;
+}
+
+/* =========================================================
+   MODAIS
+========================================================= */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    background:
+        rgba(0, 0, 0, 0.84);
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    backdrop-filter: blur(5px);
+}
+
+.modal.open {
+    display: flex;
+}
+
+.modal-content {
+    position: relative;
+
+    width: min(760px, 100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #172941,
+            #0d1728
+        );
+
+    border: 1px solid #5288d5;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.7),
+        inset 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.modal-content h2 {
+    font-size: 30px;
+
+    margin-bottom: 8px;
+}
+
+.modal-content > p {
+    color: #cbd7ec;
+
+    line-height: 1.5;
+
+    margin-bottom: 20px;
+}
+
+.close-button {
+    position: absolute;
+
+    right: 15px;
+    top: 15px;
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    background: #2a3d5d;
+
+    color: #ffffff;
+
+    font-size: 18px;
+
+    border: 1px solid #496687;
+}
+
+.close-button:hover {
+    background: #3a5275;
+}
+
+/* =========================================================
+   PAUSA
+========================================================= */
+
+.pause-content {
+    width: min(480px, 100%);
+
+    text-align: center;
+}
+
+.pause-icon {
+    font-size: 65px;
+
+    margin-bottom: 5px;
+}
+
+.pause-content h2 {
+    font-size: 32px;
+}
+
+.pause-buttons {
+    margin-top: 20px;
+}
+
+/* =========================================================
+   ACESSIBILIDADE
+========================================================= */
+
+.access-option {
+    display: grid;
+
+    grid-template-columns:
+        1fr auto auto;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 15px;
+
+    margin-bottom: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1c304c,
+            #172941
+        );
+
+    border: 1px solid #2e486b;
+
+    border-radius: 11px;
+
+    transition:
+        border-color 0.2s,
+        transform 0.2s;
+}
+
+.access-option:hover {
+    border-color: #4d719b;
+
+    transform: translateX(2px);
+}
+
+.access-option strong {
+    display: block;
+
+    margin-bottom: 5px;
+}
+
+.access-option small {
+    color: #b9c8e0;
+
+    line-height: 1.4;
+}
+
+.access-option button {
+    padding: 10px 15px;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #397cff,
+            #2c68d7
+        );
+
+    color: #ffffff;
+
+    font-weight: bold;
+
+    border: 1px solid #6395ec;
+}
+
+.access-option span {
+    min-width: 85px;
+
+    text-align: center;
+
+    color: #b9c8e0;
+
+    font-size: 13px;
+}
+
+/* =========================================================
+   TELA FINAL
+========================================================= */
+
+#finishScreen {
+    position: relative;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+}
+
+#finishScreen::before {
+    content: "";
+
+    position: fixed;
+
+    width: 600px;
+    height: 600px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(72, 213, 151, 0.07);
+
+    filter: blur(90px);
+
+    pointer-events: none;
+}
+
+.finish-container {
+    position: relative;
+
+    z-index: 1;
+
+    width: min(900px, 100%);
+
+    padding: 42px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #142842,
+            #0b1525
+        );
+
+    border: 1px solid #5e8cff;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.55);
+}
+
+.trophy {
+    font-size: 80px;
+
+    margin-bottom: 5px;
+
+    filter:
+        drop-shadow(
+            0 0 25px rgba(255, 211, 90, 0.3)
+        );
+}
+
+.finish-container h1 {
+    font-size: 45px;
+
+    margin-bottom: 10px;
+}
+
+.finish-container h2 {
+    margin-bottom: 12px;
+}
+
+.finish-container > p {
+    color: #cbd7ed;
+
+    line-height: 1.5;
+
+    margin-bottom: 25px;
+}
+
+/* =========================================================
+   ESTATÍSTICAS FINAIS
+========================================================= */
+
+.final-stat-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin: 20px 0;
+}
+
+.final-stat-grid div {
+    padding: 17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1c3555,
+            #172c48
+        );
+
+    border: 1px solid #31557e;
+
+    border-radius: 12px;
+}
+
+.final-stat-grid strong {
+    display: block;
+
+    font-size: 28px;
+
+    margin-bottom: 4px;
+
+    color: #ffffff;
+}
+
+.final-stat-grid span {
+    color: #b9cbe3;
+
+    font-size: 13px;
+}
+
+/* =========================================================
+   CAIXA DE INCLUSÃO
+========================================================= */
+
+.inclusion-box {
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #192d49,
+            #16283f
+        );
+
+    border-radius: 15px;
+
+    border: 1px solid #2e4b70;
+}
+
+.inclusion-box h3 {
+    font-size: 25px;
+
+    margin-bottom: 18px;
+}
+
+.inclusion-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+}
+
+.inclusion-grid div {
+    padding: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #253c5d,
+            #203550
+        );
+
+    border: 1px solid #304d70;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    font-size: 25px;
+}
+
+.inclusion-grid strong {
+    font-size: 16px;
+}
+
+.inclusion-grid span {
+    color: #c1cee5;
+
+    font-size: 14px;
+
+    line-height: 1.4;
+}
+
+/* =========================================================
+   TEXTO GRANDE
+========================================================= */
+
+body.large-text #objective,
+body.large-text .status-panel,
+body.large-text #messageBox {
+    font-size: 18px;
+}
+
+body.large-text #missionTitle {
+    font-size: 26px;
+}
+
+body.large-text .status-panel div {
+    font-size: 17px;
+}
+
+body.large-text .objective-box strong {
+    font-size: 15px;
+}
+
+/* =========================================================
+   ALTO CONTRASTE
+========================================================= */
+
+body.high-contrast {
+    background: #000000;
+
+    color: #ffffff;
+}
+
+body.high-contrast #gameScreen,
+body.high-contrast .game-header,
+body.high-contrast .objective-box,
+body.high-contrast .status-panel,
+body.high-contrast #messageBox,
+body.high-contrast .modal-content,
+body.high-contrast .start-container,
+body.high-contrast .finish-container {
+    background: #000000;
+
+    border-color: #ffffff;
+}
+
+body.high-contrast button {
+    border: 2px solid #ffffff;
+}
+
+body.high-contrast canvas {
+    outline: 3px solid #ffffff;
+}
+
+body.high-contrast .progress-wrap {
+    border-color: #ffffff;
+}
+
+/* =========================================================
+   MODO DE SÍMBOLOS
+========================================================= */
+
+body.colorblind-mode canvas {
+    filter: saturate(0.55);
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #08111e;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #29476b;
+
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3b608b;
+}
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+
+@media (max-width: 750px) {
+
+    #gameScreen {
+        padding: 5px;
+    }
+
+    .start-container,
+    .finish-container {
+        padding: 30px 20px;
+    }
+
+    .start-container h1,
+    .finish-container h1 {
+        font-size: 34px;
+
+        letter-spacing: 2px;
+    }
+
+    .feature-list {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .game-header {
+        padding: 9px;
+
+        gap: 8px;
+    }
+
+    #phaseNumber {
+        font-size: 12px;
+
+        padding: 7px 8px;
+    }
+
+    #missionTitle {
+        font-size: 15px;
+    }
+
+    .game-buttons {
+        gap: 4px;
+    }
+
+    .game-buttons button {
+        width: 35px;
+        height: 35px;
+
+        font-size: 15px;
+    }
+
+    #lives {
+        font-size: 15px;
+    }
+
+    .status-panel {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .inclusion-grid,
+    .final-stat-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .access-option {
+        grid-template-columns: 1fr;
+
+        text-align: center;
+    }
+
+    #touchControls,
+    #touchHint {
+        display: block;
+    }
+}
+
+/* =========================================================
+   CELULARES PEQUENOS
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .start-container h1,
+    .finish-container h1 {
+        font-size: 28px;
+
+        letter-spacing: 2px;
+    }
+
+    .logo-icon {
+        font-size: 60px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+    .feature-list {
+        grid-template-columns: 1fr;
+    }
+
+    .game-header {
+        flex-wrap: wrap;
+    }
+
+    .phase-info {
+        width: 100%;
+    }
+
+    .game-buttons {
+        width: 100%;
+
+        justify-content: flex-end;
+    }
+
+    .finish-container {
+        padding: 25px 17px;
+    }
+
+    .finish-container h2 {
+        font-size: 20px;
+    }
+
+    .inclusion-box {
+        padding: 18px;
+    }
+}
