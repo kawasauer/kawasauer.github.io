@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Missão Inclusão</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- =========================================================
+     MENU PRINCIPAL
+========================================================= -->
+
+<section id="startScreen" class="screen active">
+
+    <div class="start-container">
+
+        <div class="logo-icon">♿</div>
+
+        <div class="eyebrow">
+            PROJETO ESCOLAR • TECNOLOGIA + INCLUSÃO
+        </div>
+
+        <h1>MISSÃO INCLUSÃO</h1>
+
+        <p class="subtitle">
+            Uma aventura onde diferentes formas de jogar
+            permitem que todos participem.
+        </p>
+
+        <div class="start-buttons">
+
+            <button id="playButton" class="main-button">
+                ▶ JOGAR
+            </button>
+
+            <button id="fullscreenStartButton" class="secondary-button">
+                ⛶ TELA CHEIA
+            </button>
+
+            <button id="accessibilityButton" class="secondary-button">
+                ♿ ACESSIBILIDADE
+            </button>
+
+        </div>
+
+        <div class="feature-list">
+
+            <div>
+                🎮
+                <span>Teclado</span>
+            </div>
+
+            <div>
+                👆
+                <span>Toque</span>
+            </div>
+
+            <div>
+                👁️
+                <span>Texto grande</span>
+            </div>
+
+            <div>
+                ⚫
+                <span>Alto contraste</span>
+            </div>
+
+            <div>
+                🔷
+                <span>Símbolos</span>
+            </div>
+
+            <div>
+                🔊
+                <span>Sons</span>
+            </div>
+
+        </div>
+
+        <div class="start-tip">
+            💡 Você pode alterar as opções de acessibilidade durante a missão.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     JOGO
+========================================================= -->
+
+<section id="gameScreen" class="screen">
+
+    <!-- CABEÇALHO -->
+
+    <header class="game-header">
+
+        <div class="phase-info">
+
+            <span id="phaseNumber">
+                FASE 1 / 10
+            </span>
+
+            <div class="title-area">
+
+                <small id="phaseTheme">
+                    Parque da Amizade
+                </small>
+
+                <h2 id="missionTitle">
+                    Primeiro Passo
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="game-buttons">
+
+            <span id="lives">
+                ❤️❤️❤️
+            </span>
+
+            <button
+                id="hintButton"
+                aria-label="Dar dica"
+                title="Dica"
+            >
+                💡
+            </button>
+
+            <button
+                id="accessibilityGameButton"
+                aria-label="Acessibilidade"
+                title="Acessibilidade"
+            >
+                ♿
+            </button>
+
+            <button
+                id="pauseButton"
+                aria-label="Pausar"
+                title="Pausar"
+            >
+                ⏸
+            </button>
+
+            <button
+                id="fullscreenButton"
+                aria-label="Tela cheia"
+                title="Tela cheia"
+            >
+                ⛶
+            </button>
+
+            <button
+                id="restartButton"
+                aria-label="Reiniciar fase"
+                title="Reiniciar fase"
+            >
+                🔄
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- OBJETIVO -->
+
+    <div class="objective-box">
+
+        <span class="objective-icon">
+            🎯
+        </span>
+
+        <div>
+
+            <strong>
+                OBJETIVO
+            </strong>
+
+            <span id="objective">
+                Encontre os desafios e chegue à saída.
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- BARRA DE PROGRESSO -->
+
+    <div
+        class="progress-wrap"
+        aria-label="Progresso da fase"
+    >
+
+        <div id="progressBar"></div>
+
+    </div>
+
+
+    <!-- MAPA -->
+
+    <div class="game-wrapper">
+
+        <canvas
+            id="gameCanvas"
+            width="1080"
+            height="630"
+        ></canvas>
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div class="status-panel">
+
+        <div id="keyStatus">
+            🔑 Chaves: 0/0
+        </div>
+
+        <div id="symbolStatus">
+            🔷 Símbolos: 0/0
+        </div>
+
+        <div id="switchStatus">
+            ⚡ Interruptores: 0/0
+        </div>
+
+        <div id="doorStatus">
+            🔒 Porta bloqueada
+        </div>
+
+    </div>
+
+
+    <!-- MENSAGEM -->
+
+    <div
+        id="messageBox"
+        aria-live="polite"
+    >
+        Use as setas, WASD ou toque para jogar.
+    </div>
+
+
+    <!-- CONTROLES TOUCH -->
+
+    <div id="touchControls">
+
+        <button data-key="up">
+            ▲
+        </button>
+
+        <div>
+
+            <button data-key="left">
+                ◀
+            </button>
+
+            <button data-key="down">
+                ▼
+            </button>
+
+            <button data-key="right">
+                ▶
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div id="touchHint">
+        👆 Com o modo toque ativo,
+        toque no mapa para caminhar automaticamente.
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     MENU DE PAUSA
+========================================================= -->
+
+<div id="pauseOverlay" class="modal">
+
+    <div class="modal-content pause-content">
+
+        <button
+            id="closePauseButton"
+            class="close-button"
+        >
+            ✕
+        </button>
+
+        <div class="pause-icon">
+            ⏸️
+        </div>
+
+        <div class="eyebrow">
+            MISSÃO EM ESPERA
+        </div>
+
+        <h2>
+            Jogo pausado
+        </h2>
+
+        <p>
+            Escolha uma opção para continuar sua missão.
+        </p>
+
+        <div class="pause-buttons">
+
+            <button
+                id="continueButton"
+                class="main-button"
+            >
+                ▶ CONTINUAR
+            </button>
+
+            <button
+                id="pauseAccessibilityButton"
+                class="secondary-button"
+            >
+                ♿ ACESSIBILIDADE
+            </button>
+
+            <button
+                id="pauseRestartButton"
+                class="secondary-button"
+            >
+                🔄 REINICIAR FASE
+            </button>
+
+            <button
+                id="pauseFullscreenButton"
+                class="secondary-button"
+            >
+                ⛶ TELA CHEIA
+            </button>
+
+            <button
+                id="mainMenuButton"
+                class="menu-danger-button"
+            >
+                🏠 VOLTAR AO MENU
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     ACESSIBILIDADE
+========================================================= -->
+
+<div id="accessibilityPanel" class="modal">
+
+    <div class="modal-content">
+
+        <button
+            id="closeAccessibilityButton"
+            class="close-button"
+        >
+            ✕
+        </button>
+
+        <div class="eyebrow">
+            CONFIGURAÇÃO DA EXPERIÊNCIA
+        </div>
+
+        <h2>
+            ♿ Acessibilidade
+        </h2>
+
+        <p>
+            Escolha os recursos que deixam a experiência
+            mais confortável para você.
+        </p>
+
+
+        <div class="access-option">
+
+            <div>
+                <strong>
+                    🔎 Texto grande
+                </strong>
+
+                <small>
+                    Aumenta os textos importantes da interface.
+                </small>
+            </div>
+
+            <button id="largeTextButton">
+                Ativar
+            </button>
+
+            <span id="largeTextStatus">
+                Desativado
+            </span>
+
+        </div>
+
+
+        <div class="access-option">
+
+            <div>
+                <strong>
+                    ⚫ Alto contraste
+                </strong>
+
+                <small>
+                    Aumenta o contraste dos elementos.
+                </small>
+            </div>
+
+            <button id="contrastButton">
+                Ativar
+            </button>
+
+            <span id="contrastStatus">
+                Desativado
+            </span>
+
+        </div>
+
+
+        <div class="access-option">
+
+            <div>
+                <strong>
+                    🔷 Modo de símbolos
+                </strong>
+
+                <small>
+                    Usa formas e números além das cores.
+                </small>
+            </div>
+
+            <button id="colorblindButton">
+                Ativar
+            </button>
+
+            <span id="colorblindStatus">
+                Desativado
+            </span>
+
+        </div>
+
+
+        <div class="access-option">
+
+            <div>
+                <strong>
+                    💡 Assistência
+                </strong>
+
+                <small>
+                    Destaca objetivos e fornece pistas.
+                </small>
+            </div>
+
+            <button id="assistButton">
+                Ativar
+            </button>
+
+            <span id="assistStatus">
+                Desativado
+            </span>
+
+        </div>
+
+
+        <div class="access-option">
+
+            <div>
+                <strong>
+                    👆 Modo toque
+                </strong>
+
+                <small>
+                    Toque no mapa para caminhar automaticamente.
+                </small>
+            </div>
+
+            <button id="touchModeButton">
+                Ativar
+            </button>
+
+            <span id="touchModeStatus">
+                Desativado
+            </span>
+
+        </div>
+
+
+        <div class="access-option">
+
+            <div>
+                <strong>
+                    🔊 Sons
+                </strong>
+
+                <small>
+                    Feedback sonoro para ações importantes.
+                </small>
+            </div>
+
+            <button id="soundButton">
+                Desativar
+            </button>
+
+            <span id="soundStatus">
+                Ativado
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TELA FINAL
+========================================================= -->
+
+<section id="finishScreen" class="screen">
+
+    <div class="finish-container">
+
+        <div class="trophy">
+            🏆
+        </div>
+
+        <div class="eyebrow">
+            MISSÃO FINALIZADA
+        </div>
+
+        <h1>
+            MISSÃO CONCLUÍDA!
+        </h1>
+
+        <h2>
+            Você completou as 10 fases.
+        </h2>
+
+        <p>
+            Ao longo da missão, diferentes recursos permitiram
+            controlar, identificar, ouvir, receber ajuda e
+            resolver desafios de maneiras diferentes.
+        </p>
+
+
+        <div class="final-stat-grid">
+
+            <div>
+                <strong id="finalHints">
+                    0
+                </strong>
+
+                <span>
+                    Dicas usadas
+                </span>
+            </div>
+
+            <div>
+                <strong id="finalLives">
+                    3
+                </strong>
+
+                <span>
+                    Vidas restantes
+                </span>
+            </div>
+
+            <div>
+                <strong>
+                    10
+                </strong>
+
+                <span>
+                    Fases completas
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="inclusion-box">
+
+            <h3>
+                ♿ Tecnologia e Inclusão
+            </h3>
+
+            <div class="inclusion-grid">
+
+                <div>
+                    🎮
+                    <strong>
+                        Controle
+                    </strong>
+                    <span>
+                        Teclado, botões e toque.
+                    </span>
+                </div>
+
+                <div>
+                    👁️
+                    <strong>
+                        Visão
+                    </strong>
+                    <span>
+                        Texto grande, contraste e símbolos.
+                    </span>
+                </div>
+
+                <div>
+                    🔊
+                    <strong>
+                        Feedback
+                    </strong>
+                    <span>
+                        Sons e mensagens para ações.
+                    </span>
+                </div>
+
+                <div>
+                    💡
+                    <strong>
+                        Assistência
+                    </strong>
+                    <span>
+                        Dicas ajudam sem impedir a autonomia.
+                    </span>
+                </div>
+
+                <div>
+                    🧩
+                    <strong>
+                        Adaptação
+                    </strong>
+                    <span>
+                        O jogador escolhe como interagir.
+                    </span>
+                </div>
+
+                <div>
+                    🤝
+                    <strong>
+                        Participação
+                    </strong>
+                    <span>
+                        Inclusão começa quando existem alternativas.
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            id="restartGameButton"
+            class="main-button"
+        >
+            🔄 JOGAR NOVAMENTE
+        </button>
+
+    </div>
+
+</section>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
