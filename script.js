@@ -1273,7 +1273,7 @@ window.addEventListener(
 );
 
 /* =========================================================
-   CONTROLES DE TOQUE
+   CONTROLES DE TOQUE / SETINHAS
 ========================================================= */
 
 document
@@ -1282,40 +1282,125 @@ document
     )
     .forEach(button => {
 
+        const direction =
+            button.dataset.key;
+
+        // Impede o celular de interpretar
+        // o toque como scroll da página.
+        button.style.touchAction = "none";
+
         button.addEventListener(
             "pointerdown",
-            () => {
+            event => {
 
-                keysPressed[
-                    button.dataset.key
-                ] = true;
+                event.preventDefault();
 
+                // Mantém o botão sendo controlado
+                // mesmo se o dedo se movimentar.
+                if (
+                    button.setPointerCapture
+                ) {
+
+                    try {
+
+                        button.setPointerCapture(
+                            event.pointerId
+                        );
+
+                    } catch (error) {}
+
+                }
+
+                // Ativa a direção.
+                keysPressed[direction] = true;
+
+                // Faz o personagem responder
+                // imediatamente ao toque.
+                if (
+                    gameStarted &&
+                    !gamePaused
+                ) {
+
+                    movePlayer();
+
+                }
+
+            },
+            {
+                passive: false
             }
         );
 
-        [
+        button.addEventListener(
             "pointerup",
+            event => {
+
+                event.preventDefault();
+
+                delete keysPressed[
+                    direction
+                ];
+
+            },
+            {
+                passive: false
+            }
+        );
+
+        button.addEventListener(
             "pointercancel",
-            "pointerleave"
-        ].forEach(
-            eventName => {
+            event => {
 
-                button.addEventListener(
-                    eventName,
-                    () => {
+                event.preventDefault();
 
-                        delete keysPressed[
-                            button.dataset.key
-                        ];
+                delete keysPressed[
+                    direction
+                ];
 
-                    }
-                );
+            },
+            {
+                passive: false
+            }
+        );
+
+        button.addEventListener(
+            "lostpointercapture",
+            () => {
+
+                delete keysPressed[
+                    direction
+                ];
 
             }
         );
 
     });
 
+// Se o dedo for levantado fora da tela,
+// nenhuma seta fica "presa".
+window.addEventListener(
+    "pointerup",
+    () => {
+
+        delete keysPressed.up;
+        delete keysPressed.down;
+        delete keysPressed.left;
+        delete keysPressed.right;
+
+    }
+);
+
+window.addEventListener(
+    "pointercancel",
+    () => {
+
+        delete keysPressed.up;
+        delete keysPressed.down;
+        delete keysPressed.left;
+        delete keysPressed.right;
+
+    }
+);
 /* =========================================================
    TOQUE NO MAPA
 ========================================================= */
@@ -3040,36 +3125,44 @@ function movePlayer() {
     let dx = 0;
     let dy = 0;
 
+    // ESQUERDA
     if (
         keysPressed.arrowleft ||
-        keysPressed.a
+        keysPressed.a ||
+        keysPressed.left
     ) {
 
         dx--;
 
     }
 
+    // DIREITA
     if (
         keysPressed.arrowright ||
-        keysPressed.d
+        keysPressed.d ||
+        keysPressed.right
     ) {
 
         dx++;
 
     }
 
+    // CIMA
     if (
         keysPressed.arrowup ||
-        keysPressed.w
+        keysPressed.w ||
+        keysPressed.up
     ) {
 
         dy--;
 
     }
 
+    // BAIXO
     if (
         keysPressed.arrowdown ||
-        keysPressed.s
+        keysPressed.s ||
+        keysPressed.down
     ) {
 
         dy++;
@@ -3093,6 +3186,9 @@ function movePlayer() {
         dy /=
             length;
 
+        // Quando usa as setinhas,
+        // cancela o caminho automático
+        // do modo toque.
         clearTouchPath();
 
         tryMove(
@@ -3103,7 +3199,6 @@ function movePlayer() {
     }
 
 }
-
 /* =========================================================
    A*
 ========================================================= */
