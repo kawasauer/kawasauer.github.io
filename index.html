@@ -1,47 +1,324 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Missão Inclusão</title>
-<link rel="stylesheet" href="style.css"></head><body>
-<a class="skip" href="#cv">Pular para o jogo</a>
-  
-<main id="menu" class="scr on"><div class="hero"><div class="logo" aria-hidden="true">♿</div>
-<p class="eye">PROJETO ESCOLAR • TECNOLOGIA + INCLUSÃO</p><h1>MISSÃO INCLUSÃO</h1>
-<p class="sub">Uma aventura em 20 fases onde diferentes formas de jogar permitem que todos participem.</p>
-<label class="sl">Começar na fase <select id="sel"></select></label>
-<label class="sl">Dificuldade <select id="dif"><option value="0">🌱 Fácil: sem armadilhas, menos objetivos, caminho sempre mostrado</option><option value="1">⚖️ Médio</option><option value="2">🔥 Difícil: mais armadilhas e objetivos, mais rápido</option></select></label>
-<div class="row"><button id="play" class="b p">▶ JOGAR</button><button class="b" data-o>♿ ACESSIBILIDADE</button><button class="b" data-fs>⛶ TELA CHEIA</button></div>
-<ul class="feat"><li>⌨️ Teclado</li><li>👆 Toque com caminho automático</li><li>🔎 3 tamanhos de texto</li><li>⚫ Alto contraste</li><li>🔷 Formas e padrões</li><li>📡 Sonar sonoro</li><li>🗣️ Narração</li><li>🎙️ Controle por sons</li><li>🛟 Modo sem vidas</li></ul>
-<p class="tip">💡 Ajuste a acessibilidade quando quiser, até durante a missão. Suas escolhas ficam salvas.</p></div></main>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4338ca">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Escola Para Todos – Hub de Jogos Inclusivos</title>
+<style>
+:root{--bg:#eef2ff;--bg2:linear-gradient(135deg,#e0e7ff 0%,#fce7f3 50%,#ccfbf1 100%);--fg:#14123a;--card:#fff;--acc:#4338ca;--af:#fff;--ok:#116b2c;--okbg:#e4f5e8;--bad:#8f1d1d;--line:#14123a}
+body.dk{--bg:#12112b;--bg2:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#134e4a 100%);--fg:#f1f0ff;--card:#1d1b45;--acc:#a5b4fc;--af:#12112b;--ok:#6ee7a0;--okbg:#10301f;--bad:#fca5a5;--line:#a5b4fc}
+body.hc{--bg:#000;--bg2:linear-gradient(#000,#000);--fg:#fff;--card:#000;--acc:#ffd400;--af:#000;--ok:#3dff7a;--okbg:#000;--bad:#ff8a8a;--line:#fff}
+*{box-sizing:border-box}
+html{min-height:100%}
+body{margin:0;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;background:var(--bg);background:var(--bg2) fixed,var(--bg);color:var(--fg);font:clamp(1.05rem,1rem + .4vw,1.25rem)/1.6 "Atkinson Hyperlegible",Verdana,system-ui,sans-serif}
+body.dys{font-family:Verdana,"Comic Sans MS",sans-serif;letter-spacing:.06em;word-spacing:.15em;line-height:1.9}
+header{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:.7rem;justify-content:space-between;align-items:center;padding:.7rem max(1rem,env(safe-area-inset-right)) .7rem max(1rem,env(safe-area-inset-left));border-bottom:4px solid var(--line);background:var(--card)}
+header div{display:flex;gap:.6rem;flex-wrap:wrap}
+h1{margin:0;font-size:1.4rem}h2{font-size:clamp(1.4rem,1.2rem + 1vw,2rem);line-height:1.3;margin:.4rem 0}
+main{flex:1;width:100%;max-width:80rem;margin:0 auto;padding:1rem max(1rem,env(safe-area-inset-right)) 1rem max(1rem,env(safe-area-inset-left))}
+footer{width:100%;max-width:80rem;margin:0 auto;padding:1rem;font-size:.95rem}
+.b{font:inherit;color:var(--fg);background:var(--card);border:3px solid var(--line);border-radius:16px;padding:.7rem 1rem;min-height:3.5rem;cursor:pointer;text-align:left;touch-action:manipulation;box-shadow:0 4px 0 var(--line);transition:background .2s,transform .15s}
+.b:hover:not(:disabled){background:var(--acc);color:var(--af)}
+.b:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+.b:disabled{cursor:default;opacity:1}
+.b:focus-visible{outline:5px solid var(--acc);outline-offset:3px}
+.b.scan{outline:6px dashed #e11d74;outline-offset:3px;background:#ffe066!important;color:#000!important}
+.pri{background:var(--acc);color:var(--af);font-weight:700}
+.hero,.fb{border:4px solid var(--line);border-radius:24px;padding:1.1rem 1.4rem;background:var(--card);margin-bottom:1.2rem;box-shadow:0 6px 0 var(--line)}
+.em-row{font-size:2rem;letter-spacing:.35rem}
+.hub{display:grid;gap:1.1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr))}
+.gc{display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;min-height:10rem;color:#fff;background:var(--c);background:linear-gradient(145deg,var(--c),color-mix(in srgb,var(--c) 55%,#000));box-shadow:0 6px 0 var(--line)}
+.gc:hover:not(:disabled){color:#fff;transform:translateY(-4px);background:var(--c);background:linear-gradient(145deg,var(--c),color-mix(in srgb,var(--c) 55%,#000))}
+body.hc .gc,body.hc .gc:hover:not(:disabled){background:#000;color:#fff;border-left:18px solid var(--c)}
+.gc .ic{font-size:3rem;line-height:1}.gc strong{font-size:1.3rem}.gc small{display:block;font-weight:400}
+.tag{font-size:.85rem;font-weight:700;background:#fff;color:#14123a;border-radius:99px;padding:.1rem .8rem}
+.meta{font-weight:700}
+.opts{list-style:none;padding:0;display:grid;gap:.7rem}.opt{width:100%}
+.right{border-color:var(--ok);background:var(--okbg)}.wrong{border-style:dotted;border-color:var(--bad)}
+.row{display:flex;gap:.7rem;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.mem{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:1rem 0}
+@media(min-width:34rem){.mem{grid-template-columns:repeat(4,1fr)}}
+.card{min-height:6rem;display:grid;place-items:center;text-align:center;font-weight:700;font-size:1.05rem}
+.card .em{font-size:2.4rem}.card.up{background:var(--acc);color:var(--af)}.card.done{border-style:dashed;opacity:.65}
+.vel{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;max-width:22rem;margin:1rem auto}
+.cell{aspect-ratio:1;font-size:3rem;text-align:center;padding:0;min-height:5rem}.cell.w{background:var(--acc);color:var(--af);border-style:dashed}
+.word{display:flex;flex-wrap:wrap;gap:.5rem;font-size:2rem;font-weight:700;margin:1rem 0}
+.word span{min-width:2rem;text-align:center;border-bottom:5px solid var(--line)}
+.keys{display:grid;grid-template-columns:repeat(auto-fill,minmax(3.6rem,1fr));gap:.4rem;margin:1rem 0}
+.keys .b{text-align:center;padding:.3rem;min-height:3.3rem;font-weight:700}
+.b[aria-disabled=true]{opacity:.55;border-style:dashed;cursor:default}
+.pads{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;max-width:26rem;margin:1rem auto}
+.pad{background:var(--p);color:var(--t);border-color:var(--line);min-height:8rem;text-align:center;font-weight:700;display:grid;place-items:center;font-size:1.1rem}
+.pad span{font-size:2.6rem;display:block}
+.vel{width:min(32rem,100%);max-width:none}.pads{width:min(34rem,100%);max-width:none}.pad{min-height:clamp(7rem,22vh,12rem)}.cell{font-size:clamp(2.5rem,8vw,4rem)}
+.rps{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}.big2{display:grid;place-items:center;text-align:center;font-weight:700;min-height:8rem}.big2 span{font-size:3.2rem}
+.puz .cell{font-size:clamp(2rem,7vw,3.2rem);font-weight:700}.cell.empty{background:transparent;border-style:dashed;box-shadow:none}
+.tools{display:flex;gap:.6rem;flex-wrap:wrap;margin:.6rem 0;align-items:center}
+input{font:inherit;color:var(--fg);background:var(--card);border:3px solid var(--line);border-radius:14px;padding:.6rem;width:7rem;min-height:3.5rem;text-align:center}input:focus-visible{outline:5px solid var(--acc);outline-offset:3px}
+@media(min-width:60rem){.mem{grid-template-columns:repeat(6,1fr)}}
+.pad:hover:not(:disabled){background:var(--p);color:var(--t);filter:brightness(1.15)}
+.pad.lit{filter:brightness(1.6);outline:8px solid var(--fg);outline-offset:2px;transform:scale(1.04)}
+#panel{position:fixed;inset:0;background:rgba(0,0,0,.65);display:grid;place-items:center;padding:1rem;overflow:auto}
+.box{background:var(--bg);border:4px solid var(--line);border-radius:18px;padding:1.2rem;max-width:30rem;width:100%;display:grid;gap:.7rem;max-height:100%;overflow:auto}
+.box h2{margin:0}
+[hidden]{display:none!important}
+.sr,.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;background:#fff;color:#000;padding:.5rem;z-index:9}
+body.calm *{transition:none!important;animation:none!important}body.calm .pad.lit{transform:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}.pad.lit{transform:none}}
+/* Alvos de toque grandes (mobilidade reduzida): tudo cabe na largura da tela */
+.b{min-height:4rem;max-width:100%;overflow-wrap:anywhere}
+header .b{min-height:4rem;padding:.6rem 1.2rem}
+.opts{gap:1rem}.opt{min-height:5.5rem;padding:1rem 1.3rem;font-size:1.15em}
+.tools{gap:.9rem}.tools .b{min-width:4.5rem;min-height:4.5rem;text-align:center;font-size:1.3em;font-weight:700}
+input{width:9rem;min-height:4.5rem;font-size:1.6rem}
+.row{gap:1rem}.row .b{flex:1 1 11rem;min-height:4.5rem;text-align:center}
+.vel{width:min(100%,36rem,62vh);gap:.9rem}.cell{min-height:0}
+.mem{gap:.9rem}.card{min-height:clamp(5.5rem,17vh,9.5rem);font-size:1.2rem}.card .em{font-size:3rem}
+.keys{grid-template-columns:repeat(auto-fill,minmax(min(4.8rem,30%),1fr));gap:.6rem}.keys .b{min-height:4.4rem;font-size:1.4rem;padding:.3rem}
+.pads{width:min(100%,42rem);gap:1.1rem}.pad{min-height:clamp(8rem,27vh,15rem)}.pad span{font-size:3.4rem}
+.rps{gap:1rem}.big2{min-height:clamp(9rem,28vh,15rem)}.big2 span{font-size:4rem}
+.box .b{min-height:4.2rem}
+body.xl .b{min-height:clamp(5rem,12vh,7rem);padding:1rem 1.4rem;font-size:1.2em}
+body.xl .keys{grid-template-columns:repeat(auto-fill,minmax(min(6rem,30%),1fr))}body.xl .keys .b{min-height:5.5rem;font-size:1.6rem}
+body.xl .opt{min-height:7rem}body.xl .card{min-height:clamp(7rem,21vh,11rem)}body.xl .gc{min-height:12rem}
+body.xl .vel{gap:1.1rem}body.xl .pad{min-height:clamp(9rem,30vh,17rem)}
+</style>
+</head>
+<body>
+<a class="skip" href="#stage">Pular para o jogo</a>
+<header>
+  <h1>🏫 Escola Para Todos</h1>
+  <div><button class="b" data-act="menu">🏠 Início</button><button class="b" data-act="full">⛶ Tela cheia</button><button class="b" data-act="panel" aria-haspopup="dialog">⚙️ Acessibilidade</button></div>
+</header>
+<main><div id="stage"></div></main>
+<footer>Teclado: Tab navega · Enter ou Espaço ativam · números escolhem opções · Esc fecha as configurações. Com a varredura automática, um único botão (Espaço, Enter ou clique) joga tudo.</footer>
+<div id="panel" role="dialog" aria-modal="true" aria-label="Configurações de acessibilidade" hidden></div>
+<div id="live" class="sr" role="status" aria-live="polite"></div>
 
-<section id="game" class="scr" aria-label="Jogo">
-<header class="hd"><div><small id="ph"></small><small id="th"></small><h2 id="ti"></h2></div>
-<div class="tools"><span id="lv" role="img"></span><button class="b i" id="hb" aria-label="Dica (tecla H)" title="Dica (H)">💡</button><button class="b i" data-o aria-label="Acessibilidade" title="Acessibilidade">♿</button><button class="b i" id="pb" aria-label="Pausar (Esc)" title="Pausar (Esc)">⏸</button><button class="b i" data-fs aria-label="Tela cheia" title="Tela cheia">⛶</button><button class="b i" id="rb" aria-label="Reiniciar fase" title="Reiniciar fase">🔄</button></div></header>
-<div class="obj">🎯 <span id="ob"></span></div>
-<div class="bar" id="pg" role="progressbar" aria-label="Progresso da fase" aria-valuemin="0" aria-valuemax="100"><i id="pgi"></i></div>
-<canvas id="cv" role="img" aria-label="Mapa do jogo. Use setas ou WASD para andar. H dá uma dica em texto. E diz o que falta."></canvas>
-<div class="chips"><span class="chip" id="c1"></span><span class="chip" id="c2"></span><span class="chip" id="c3"></span><span class="chip" id="c4"></span></div>
-<p id="msg" role="status" aria-live="polite"></p>
-<div id="dp" oncontextmenu="return false"><button class="b u" data-d="u" aria-label="Cima">▲</button><button class="b l" data-d="l" aria-label="Esquerda">◀</button><button class="b r" data-d="r" aria-label="Direita">▶</button><button class="b d" data-d="d" aria-label="Baixo">▼</button></div>
-</section>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const shuf=a=>{a=[...a];for(let i=a.length;i>1;){const j=Math.random()*i--|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const S={size:1,theme:0,xl:false,dys:false,calm:false,sound:true,vib:true,tts:false,scan:false,speed:3,best:0};
+try{Object.assign(S,JSON.parse(localStorage.getItem('escola-todos')||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem('escola-todos',JSON.stringify(S))}catch(e){}};
 
-<div id="pause" class="modal" role="dialog" aria-modal="true" aria-labelledby="pt"><div class="card tc"><button class="b i x" id="px" aria-label="Fechar">✕</button>
-<div style="font-size:3rem">⏸️</div><p class="eye">MISSÃO EM ESPERA</p><h2 id="pt">Jogo pausado</h2>
-<div class="stack"><button class="b p" id="pc">▶ CONTINUAR</button><button class="b" data-o>♿ ACESSIBILIDADE</button><button class="b" id="pr">🔄 REINICIAR FASE</button><button class="b" data-fs>⛶ TELA CHEIA</button><button class="b" id="pm">🏠 VOLTAR AO MENU</button></div></div></div>
+/* Som, vibração e voz */
+let ac;
+function tone(f,d=.25){if(!S.sound)return;try{ac=ac||new AudioContext();const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;g.gain.value=.08;o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
+const vib=p=>{if(S.vib&&navigator.vibrate)navigator.vibrate(p)};
+const fx=ok=>{tone(ok?660:220,ok?.2:.35);vib(ok?30:[60,40,60])};
+function speak(t){if(S.tts&&'speechSynthesis' in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='pt-BR';speechSynthesis.speak(u)}}
+function say(t){const l=$('#live');l.textContent='';setTimeout(()=>l.textContent=t,50);speak(t)}
+function view(html,msg){game='';$('#stage').innerHTML=html;const h=$('#h');if(h)h.focus();if(msg)speak(msg);restartScan()}
+let game='';
+function endScr(t,p,again){view(`<h2 id="h" tabindex="-1">${t}</h2><p>${p}</p><p><button class="b pri" data-act="${again}">Jogar de novo</button></p><p><button class="b" data-act="menu">Voltar ao início</button></p>`,t+' '+p)}
 
-<div id="acc" class="modal" role="dialog" aria-modal="true" aria-labelledby="at"><div class="card"><button class="b i x" id="ax" aria-label="Fechar">✕</button>
-<p class="eye">CONFIGURAÇÃO DA EXPERIÊNCIA</p><h2 id="at">♿ Acessibilidade</h2><p style="color:var(--mu);margin:.3rem 0">O jogo pausa enquanto você ajusta. Tudo fica salvo neste aparelho.</p><div class="stack" id="opts"></div><button class="b" id="sb" style="margin-top:.6rem;width:100%">🎙️ Configurar sons do jogador</button></div></div>
+/* Hub */
+const G=[['velha','⭕','Jogo da Velha','Contra o computador ou em dupla','#4338ca','Estratégia'],['mem','🧩','Memória','Pares de símbolos da inclusão','#0f766e','Memória'],['forca','🔤','Forca','Adivinhe palavras sobre inclusão','#b45309','Palavras'],['genius','🎵','Sequência','Repita luzes, sons e formas','#be185d','Atenção'],['quiz','🤝','Situações da Escola','Escolha a atitude mais inclusiva','#1d4ed8','Cidadania'],['rps','✊','Pedra, Papel e Tesoura','Duelo clássico contra o computador','#7c3aed','Sorte'],['puz','🔢','Quebra-cabeça','Deslize as peças até a ordem certa','#0e7490','Lógica'],['num','🎯','Adivinhe o Número','Maior ou menor? Descubra o segredo','#15803d','Raciocínio']];
+function menu(){view(`<section class="hero"><div class="em-row" aria-hidden="true">🎲 🧩 🔤 🎵 🤝 ✊ 🔢 🎯</div><h2 id="h" tabindex="-1">Escolha um jogo</h2><p>${G.length} jogos para todo mundo jogar do seu jeito: mouse, toque, teclado, voz, leitor de tela ou um único botão. Ajuste tudo em ⚙️ Acessibilidade. Sem tempo limite e sem pressão.</p></section>
+<div class="hub">${G.map(g=>`<button class="b gc" data-act="${g[0]}" style="--c:${g[4]}"><span class="ic" aria-hidden="true">${g[1]}</span><strong>${g[2]}</strong><small>${g[3]}</small><span class="tag">${g[5]}</span></button>`).join('')}</div>`,'Início. Jogos: '+G.map(g=>g[2]).join(', ')+'.')}
 
-<div id="snd" class="modal" role="dialog" aria-modal="true" aria-labelledby="st2"><div class="card"><button class="b i x" id="sx" aria-label="Fechar">✕</button>
-<p class="eye">CONTROLE POR SONS</p><h2 id="st2">🎙️ Sons do jogador</h2>
-<p style="color:var(--mu);margin:.3rem 0">Grave 3 a 5 exemplos de cada som. Pode ser qualquer som que você consiga repetir: "ah", "uh", estalo, palma, assobio. O áudio fica só neste aparelho. Precisa abrir o jogo direto no navegador para o microfone funcionar.</p>
-<div class="row"><button class="b p" id="mic">🎤 Ativar microfone</button><button class="b" id="mcal" disabled>🔇 Recalibrar (silêncio)</button></div>
-<div class="bar" style="margin-top:.6rem"><i id="mlv"></i></div><div id="mcards"></div>
-<label style="color:var(--mu)">Rigor: <input type="range" id="mrig" min="70" max="98" value="88" aria-label="Rigor do reconhecimento"> <output id="mrv">88</output>%</label>
-<p id="mst" role="status" aria-live="polite" style="color:var(--mu)">Ative o microfone para começar. Faça um som para ver se ele é reconhecido.</p></div></div>
+/* 1. Jogo da Velha */
+const L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+let vb,vt,vm=1,vo;
+const vwin=()=>L.find(l=>vb[l[0]]&&vb[l[0]]===vb[l[1]]&&vb[l[0]]===vb[l[2]]);
+function startVelha(){vb=Array(9).fill('');vt='✕';vo=false;
+  view(`<h2 id="h" tabindex="-1">Jogo da Velha</h2><p class="meta" id="vs"></p>
+  <div class="vel">${vb.map((_,i)=>`<button class="b cell" data-act="cell" data-i="${i}" data-n="${i+1}"></button>`).join('')}</div>
+  <div class="row"><button class="b" data-act="velha">Reiniciar</button><button class="b" data-act="vmode">Modo: ${vm?'contra o computador':'2 jogadores'} (trocar)</button></div>`,'Jogo da Velha. Escolha uma das 9 casas, numeradas de 1 a 9.');
+  game='velha';paintV(vm?'Sua vez: você joga com ✕.':'Vez de ✕.')}
+function paintV(msg,w){
+  $$('.cell').forEach((b,i)=>{const c=vb[i];b.textContent=c;b.disabled=!!c||vo;b.classList.toggle('w',!!w&&w.includes(i));
+    b.setAttribute('aria-label',`Casa ${i+1}, linha ${(i/3|0)+1}, coluna ${i%3+1}: ${c==='✕'?'X':c==='◯'?'bola':'vazia'}`)});
+  $('#vs').textContent=msg;say(msg);restartScan()}
+function place(i){
+  vb[i]=vt;tone(vt==='✕'?440:330,.2);const w=vwin();
+  if(w||vb.every(x=>x)){vo=true;fx(true);paintV(w?(vm?(vt==='✕'?'Você venceu! 🎉':'O computador venceu. Boa partida, jogue de novo!'):`${vt} venceu! 🎉`):'Empate! Ninguém perde aqui.',w);return}
+  vt=vt==='✕'?'◯':'✕';
+  if(vm&&vt==='◯'){paintV('O computador está pensando…');setTimeout(cpu,800)}else paintV(vm?'Sua vez.':'Vez de '+vt+'.')}
+function cpu(){
+  const f=s=>{for(const l of L){const v=l.map(k=>vb[k]);if(v.filter(x=>x===s).length===2&&v.includes(''))return l[v.indexOf('')]}};
+  const free=vb.map((c,i)=>c?-1:i).filter(i=>i>=0);
+  let i=Math.random()<.25?free[Math.random()*free.length|0]:f('◯');
+  if(i===undefined)i=f('✕');if(i===undefined)i=vb[4]===''?4:[0,2,6,8,1,3,5,7].find(k=>!vb[k]);place(i)}
+function cell(i){if(vo||vb[i]||(vm&&vt==='◯'))return;place(i)}
 
-<section id="end" class="scr"><div class="hero"><div style="font-size:4rem">🏆</div><p class="eye">MISSÃO FINALIZADA</p><h1>MISSÃO CONCLUÍDA!</h1><h2>Você completou as 20 fases.</h2>
-<p class="sub">Diferentes recursos permitiram controlar, identificar, ouvir, receber ajuda e resolver desafios de maneiras diferentes.</p>
-<div class="stats"><div><strong id="fh">0</strong>Dicas usadas</div><div><strong id="fu">0</strong>Tropeços</div><div><strong>20</strong>Fases completas</div></div>
-<div class="grid"><div><b>🎮 Controle</b>Teclado, botões e toque com caminho automático.</div><div><b>👁️ Visão</b>Texto grande, contraste, formas e padrões.</div><div><b>🔊 Sons</b>Efeitos, sonar e narração.</div><div><b>💡 Assistência</b>Guia e dicas sem tirar a autonomia.</div><div><b>🧩 Adaptação</b>Ritmo calmo e modo sem vidas.</div><div><b>🤝 Participação</b>Inclusão começa quando existem alternativas.</div></div>
-<button class="b p" id="again">🔄 JOGAR NOVAMENTE</button></div></section>
+/* 2. Memória */
+const P=[['♿','Acessibilidade'],['🤟','Libras'],['🦯','Bengala'],['🦻','Aparelho auditivo'],['⠃','Braille'],['🐕‍🦺','Cão-guia']];
+let cards=[],opn=[],lock=false,tries=0,found=0;
+function startMem(){
+  cards=shuf(P.flatMap(([e,n],i)=>[{p:i,t:e,e:1,lab:'Símbolo de '+n},{p:i,t:n,e:0,lab:n}]).map(c=>({...c,up:false,done:false})));
+  opn=[];lock=false;tries=0;found=0;
+  view(`<p class="meta" id="mm"></p><h2 id="h" tabindex="-1">Memória da Inclusão</h2><p>Vire duas cartas: uma mostra o símbolo e a outra mostra o nome. Sem pressa!</p>
+  <div class="mem">${cards.map((c,i)=>`<button class="b card" data-act="card" data-i="${i}"></button>`).join('')}</div>`,'Memória. 12 cartas, 6 pares. Uma carta mostra o símbolo e a outra, o nome.');
+  cards.forEach((_,i)=>paint(i));stat()}
+function paint(i){
+  const b=$$('.card')[i],c=cards[i],show=c.up||c.done;
+  b.className='b card'+(c.up?' up':'')+(c.done?' done':'');b.disabled=c.done;
+  b.innerHTML=show?(c.e?`<span class="em" aria-hidden="true">${c.t}</span>`:`<span>${c.t}</span>`):'<span aria-hidden="true">?</span>';
+  b.setAttribute('aria-label',`Carta ${i+1} de 12: `+(show?(c.done?'par encontrado, ':'virada, ')+c.lab:'virada para baixo'))}
+const stat=()=>{$('#mm').textContent=`Pares: ${found} de ${P.length} · Tentativas: ${tries}`};
+function flip(i){
+  if(lock)return;const c=cards[i];if(c.up||c.done)return;
+  c.up=true;paint(i);opn.push(i);say(c.lab);tone(500,.1);
+  if(opn.length<2)return;
+  const[a,b]=opn;tries++;lock=true;stat();
+  if(cards[a].p===cards[b].p){
+    setTimeout(()=>{[a,b].forEach(k=>{cards[k].done=true;cards[k].up=false;paint(k)});found++;opn=[];lock=false;fx(true);stat();
+      if(found===P.length){endScr('Você achou todos os pares! 🎉',`Foram ${tries} tentativas. Esses símbolos ajudam a tornar o mundo mais acessível.`,'mem');return}
+      say('Par encontrado: '+P[cards[a].p][1]+'.');const n=$('.card:not(:disabled)');n&&n.focus();restartScan()},700);
+  }else setTimeout(()=>{[a,b].forEach(k=>{cards[k].up=false;paint(k)});opn=[];lock=false;fx(false);say('Não é um par. As cartas viraram de volta.');restartScan()},1800)}
 
-<script src="script.js" defer></script></body></html>
+/* 3. Forca */
+const WD=[['LIBRAS','Língua de sinais usada por pessoas surdas no Brasil'],['BRAILLE','Sistema de leitura com pontos em relevo'],['RAMPA','Substitui a escada para quem usa cadeira de rodas'],['EMPATIA','Se colocar no lugar do outro'],['RESPEITO','Base de toda boa convivência'],['DIVERSIDADE','Cada pessoa é diferente, e isso é bom'],['INCLUSAO','Todos participam, do jeito deles'],['ACESSIVEL','Algo que todos conseguem usar']];
+let fw,fh,fu,fe,fd;
+function startForca(){const w=WD[Math.random()*WD.length|0];fw=w[0];fh=w[1];fu=[];fe=0;fd=false;
+  view(`<h2 id="h" tabindex="-1">Forca</h2><p><b>Dica:</b> ${fh}. A palavra tem ${fw.length} letras (sem acento).</p>
+  <p class="meta" id="fs"></p><div class="word" id="fwd"></div>
+  <div class="keys">${[...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'].map(c=>`<button class="b" data-act="key" data-c="${c}">${c}</button>`).join('')}</div>
+  <button class="b" data-act="forca">Outra palavra</button>`,`Forca. Dica: ${fh}. A palavra tem ${fw.length} letras.`);
+  game='forca';paintF()}
+function paintF(msg){
+  $('#fwd').innerHTML=[...fw].map(c=>`<span>${fu.includes(c)?c:'&nbsp;'}</span>`).join('');
+  $('#fwd').setAttribute('aria-label','Palavra: '+[...fw].map(c=>fu.includes(c)?c:'em branco').join(', '));
+  $$('.keys .b').forEach(b=>{const c=b.dataset.c,u=fu.includes(c);b.setAttribute('aria-disabled',u||fd);
+    b.textContent=c+(u?(fw.includes(c)?' ✔':' ✖'):'');b.setAttribute('aria-label',`Letra ${c}`+(u?(fw.includes(c)?', acertou':', errou'):''))});
+  const st=`Erros: ${fe} de 7 ${'♥'.repeat(7-fe)}${'♡'.repeat(fe)}`;$('#fs').textContent=msg||st;if(msg)say(msg);restartScan()}
+function guess(c){
+  if(fd||fu.includes(c))return;fu.push(c);const ok=fw.includes(c);if(!ok)fe++;fx(ok);
+  if([...fw].every(x=>fu.includes(x))){fd=true;paintF('Você descobriu: '+fw+'! 🎉');return}
+  if(fe>=7){fd=true;fu.push(...fw);paintF('Acabaram as chances. A palavra era '+fw+'. Tente outra!');return}
+  paintF(ok?`Tem a letra ${c}! `+`Erros: ${fe} de 7.`:`Não tem a letra ${c}. Erros: ${fe} de 7.`)}
+
+/* 4. Sequência (estilo Genius) */
+const PD=[['▲','Vermelho','#d62839',262,'#fff'],['●','Azul','#1d4ed8',330,'#fff'],['■','Verde','#15803d',392,'#fff'],['◆','Amarelo','#facc15',523,'#000']];
+let gs=[],gi=0,gb=true;
+function startGen(){gs=[];gi=0;gb=true;
+  view(`<h2 id="h" tabindex="-1">Sequência</h2><p>Observe a ordem das formas, cores, sons e vibrações. Depois repita na mesma ordem. Teclas 1 a 4.</p>
+  <p class="meta" id="gst"></p><div class="pads">${PD.map((p,i)=>`<button class="b pad" data-act="pad" data-i="${i}" data-n="${i+1}" style="--p:${p[2]};--t:${p[4]}" aria-label="${i+1}: ${p[1]}, ${['triângulo','círculo','quadrado','losango'][i]}"><div><span aria-hidden="true">${p[0]}</span>${p[1]}</div></button>`).join('')}</div>
+  <div class="row"><button class="b" data-act="genius">Recomeçar</button><button class="b" data-act="greplay">🔁 Ouvir a sequência de novo</button></div>`,'Sequência. Observe e repita a ordem.');
+  setTimeout(addRound,600)}
+function light(i){const b=$$('.pad')[i];if(!b)return;b.classList.add('lit');tone(PD[i][3],.4);vib(40);say(PD[i][1]);setTimeout(()=>b.classList.remove('lit'),450)}
+function play(){gb=true;gi=0;$('#gst').textContent=`Rodada ${gs.length}: observe… (recorde: ${S.best})`;let k=0;
+  const s=()=>{if(k>=gs.length){gb=false;$('#gst').textContent=`Sua vez: repita ${gs.length} passo${gs.length>1?'s':''}.`;say($('#gst').textContent);return}light(gs[k++]);setTimeout(s,900)};setTimeout(s,700)}
+function addRound(){gs.push(Math.random()*4|0);play()}
+function pad(i){
+  if(gb)return;light(i);
+  if(i===gs[gi]){gi++;if(gi===gs.length){gb=true;if(gs.length>S.best){S.best=gs.length;save()}fx(true);$('#gst').textContent='Muito bem! Próxima rodada…';setTimeout(addRound,1200)}}
+  else{gb=true;fx(false);const m=`Errou! Você chegou à rodada ${gs.length}. Recorde: ${S.best}. Toque em Recomeçar.`;$('#gst').textContent=m;say(m)}}
+
+/* 5. Situações da Escola */
+// Em cada pergunta, a PRIMEIRA opção é a mais inclusiva (as opções são embaralhadas).
+const Q=[
+{q:'Um colega usa cadeira de rodas e a sala fica no andar de cima, só com escada. O que a escola deve ter?',o:['Rampa ou elevador de acesso','Pedir que ele suba carregado no colo','Trocar o colega de escola','Nada, ele que se vire'],w:'Rampas e elevadores garantem o direito de ir e vir com autonomia. Acessibilidade é responsabilidade da escola.'},
+{q:'Você tem um colega surdo que usa Libras. Como incluí-lo?',o:['Aprender sinais básicos e falar olhando para ele','Falar bem alto, quase gritando','Ignorar, porque é difícil','Falar sempre de costas'],w:'Libras é uma língua oficial do Brasil. Olhar de frente, escrever e aprender alguns sinais já abre muitas portas.'},
+{q:'Ao entregar um material para um colega com deficiência visual, o que é melhor?',o:['Avisar o que é e oferecer áudio, Braille ou letra ampliada','Jogar na mesa e sair','Entregar sem dizer nada','Dizer apenas "olha ali"'],w:'Descrever e oferecer formatos alternativos dá autonomia. Evite "olha ali", que não informa nada.'},
+{q:'Um colega autista se incomoda com o barulho alto do recreio. O que fazer?',o:['Oferecer um lugar calmo e respeitar o pedido de pausa','Obrigar a ficar no meio do barulho','Zombar da reação dele','Aumentar o volume da música'],w:'Muitas pessoas autistas têm sensibilidade a sons. Um espaço calmo e respeito aos limites fazem diferença.'},
+{q:'Qual é a forma respeitosa de se referir a alguém com deficiência?',o:['Pessoa com deficiência','Aleijado','Portador de defeito','Doentinho'],w:'"Pessoa com deficiência" é o termo adotado pela Convenção da ONU. A pessoa vem antes, e deficiência não é doença.'},
+{q:'Você quer ajudar um colega cadeirante. Qual é o melhor jeito?',o:['Perguntar "Posso ajudar?" e esperar a resposta','Empurrar a cadeira sem avisar','Fingir que não viu','Tirar uma foto'],w:'A cadeira de rodas faz parte do espaço pessoal. Perguntar e respeitar a resposta mostra cuidado.'}
+];
+let qi=0,pts=0,order=[],cur=[];
+function startQuiz(){order=shuf(Q.map((_,i)=>i));qi=0;pts=0;showQ()}
+function showQ(){
+  const q=Q[order[qi]];cur=shuf(q.o.map((t,i)=>({t,ok:i===0})));
+  view(`<p class="meta">Situação ${qi+1} de ${Q.length} · Pontos: ${pts}</p><h2 id="h" tabindex="-1">${q.q}</h2>
+  <ul class="opts">${cur.map((o,i)=>`<li><button class="b opt" data-act="ans" data-i="${i}" data-n="${i+1}"><b>${i+1}.</b> ${o.t}</button></li>`).join('')}</ul><div id="fb"></div>`,
+  `Situação ${qi+1} de ${Q.length}. ${q.q} ${cur.map((o,i)=>`Opção ${i+1}: ${o.t}.`).join(' ')}`)}
+function ans(i){
+  const q=Q[order[qi]],o=cur[i];
+  $$('.opt').forEach((b,j)=>{b.disabled=true;b.classList.remove('scan');
+    if(cur[j].ok){b.classList.add('right');b.insertAdjacentHTML('beforeend',' ✔ <em>Atitude mais inclusiva</em>')}
+    else if(j===i){b.classList.add('wrong');b.insertAdjacentHTML('beforeend',' ✖ <em>Sua escolha</em>')}});
+  if(o.ok)pts++;fx(o.ok);const t=o.ok?'Muito bem!':'Quase! Vamos aprender juntos.';
+  $('#fb').innerHTML=`<div class="fb"><h3>${o.ok?'✔':'✖'} ${t}</h3><p>${q.w}</p></div><button class="b pri" data-act="next" id="nx">${qi+1<Q.length?'Próxima situação':'Ver resultado'}</button>`;
+  say(`${t} ${q.w}`);$('#nx').focus();restartScan()}
+function next(){qi++;qi<Q.length?showQ():endScr('Fim! 🎉',`Você fez ${pts} de ${Q.length} pontos. ${pts>=Q.length-1?'Você é referência em inclusão!':'Jogue de novo e descubra mais!'}`,'quiz')}
+
+/* 6. Pedra, Papel e Tesoura */
+const RP=[['✊','Pedra'],['✋','Papel'],['✌️','Tesoura']];let rs=[0,0];
+function startRps(){rs=[0,0];view(`<h2 id="h" tabindex="-1">Pedra, Papel e Tesoura</h2><p>Escolha sua jogada. Teclas 1 a 3.</p><p class="meta" id="rst">Você 0 × 0 Computador</p>
+  <div class="rps">${RP.map((r,i)=>`<button class="b big2" data-act="rp" data-i="${i}" data-n="${i+1}" aria-label="${i+1}: ${r[1]}"><span aria-hidden="true">${r[0]}</span>${r[1]}</button>`).join('')}</div><p class="meta" id="rmsg"></p>`,'Pedra, papel e tesoura. Escolha 1, 2 ou 3.')}
+function rp(i){const c=Math.random()*3|0,r=(i-c+3)%3;if(r===1)rs[0]++;if(r===2)rs[1]++;fx(r!==2);
+  const m=`Você: ${RP[i][1]}. Computador: ${RP[c][1]}. `+(r===0?'Empate!':r===1?'Você ganhou a rodada! 🎉':'O computador ganhou. Tente de novo!');
+  $('#rst').textContent=`Você ${rs[0]} × ${rs[1]} Computador`;$('#rmsg').textContent=m;say(m+` Placar: você ${rs[0]}, computador ${rs[1]}.`)}
+
+/* 7. Quebra-cabeça deslizante */
+const NB=[[1,3],[0,2,4],[1,5],[0,4,6],[1,3,5,7],[2,4,8],[3,7],[4,6,8],[5,7]];let sp,sm;
+function startPuz(){sp=[1,2,3,4,5,6,7,8,0];let z=8;for(let k=0;k<150;k++){const n=NB[z],j=n[Math.random()*n.length|0];[sp[z],sp[j]]=[sp[j],sp[z]];z=j}sm=0;
+  view(`<h2 id="h" tabindex="-1">Quebra-cabeça</h2><p>Deslize as peças até ficarem na ordem de 1 a 8, com o espaço vazio no fim. Clique em uma peça ao lado do espaço ou use as setas do teclado.</p><p class="meta" id="pm"></p>
+  <div class="vel puz">${sp.map((_,i)=>`<button class="b cell" data-act="tile" data-i="${i}"></button>`).join('')}</div><button class="b" data-act="puz">Embaralhar de novo</button>`,'Quebra-cabeça. Coloque as peças de 1 a 8 em ordem.');
+  game='puz';paintP()}
+function paintP(){const z=sp.indexOf(0);
+  $$('.puz .cell').forEach((b,i)=>{const v=sp[i],adj=NB[z].includes(i);b.textContent=v||'';b.classList.toggle('empty',!v);b.setAttribute('aria-disabled',!adj);
+    b.setAttribute('aria-label',(v?`Peça ${v}`:'Espaço vazio')+`, linha ${(i/3|0)+1}, coluna ${i%3+1}`+(adj?', pode mover':''))});
+  $('#pm').textContent=`Movimentos: ${sm}`;restartScan()}
+function tile(i){const z=sp.indexOf(0);if(!NB[z].includes(i))return;[sp[z],sp[i]]=[sp[i],sp[z]];sm++;tone(400,.1);vib(20);
+  if(sp.every((v,k)=>v===(k+1)%9)){fx(true);endScr('Quebra-cabeça resolvido! 🎉',`Você usou ${sm} movimentos.`,'puz');return}paintP()}
+
+/* 8. Adivinhe o Número */
+let gn,gt,nl,nh;
+function startNum(){gn=1+Math.random()*50|0;gt=0;nl=1;nh=50;
+  view(`<h2 id="h" tabindex="-1">Adivinhe o Número</h2><p>Pensei em um número de 1 a 50. Diga um palpite e eu respondo se o meu é maior ou menor. Sem limite de tentativas!</p>
+  <form id="nf" class="tools"><label for="ni">Seu palpite:</label><input id="ni" type="number" inputmode="numeric" min="1" max="50" value="25">
+  <button class="b" type="button" data-act="nd" data-d="-5" aria-label="Menos 5">−5</button><button class="b" type="button" data-act="nd" data-d="-1" aria-label="Menos 1">−1</button><button class="b" type="button" data-act="nd" data-d="1" aria-label="Mais 1">+1</button><button class="b" type="button" data-act="nd" data-d="5" aria-label="Mais 5">+5</button>
+  <button class="b pri" type="button" data-act="nok">Tentar</button></form><p class="meta" id="nmsg">O número está entre 1 e 50.</p>`,'Adivinhe o número de 1 a 50.')}
+function guessN(){const v=+$('#ni').value;if(!(v>=1&&v<=50)){say('Digite um número de 1 a 50.');return}
+  gt++;if(v===gn){fx(true);endScr('Acertou! 🎉',`Você descobriu o número ${gn} em ${gt} tentativa${gt>1?'s':''}.`,'num');return}
+  fx(false);if(v<gn)nl=Math.max(nl,v+1);else nh=Math.min(nh,v-1);
+  const m=`${v} é ${v<gn?'menor':'maior'} que o meu número. Ele está entre ${nl} e ${nh}.`;$('#nmsg').textContent=m;say(m)}
+
+/* Painel de acessibilidade */
+const speeds=[2,3,5,8],TH=['Claro','Escuro','Alto contraste'];let po=false;
+function apply(){document.documentElement.style.fontSize=Math.round(S.size*100)+'%';const c=document.body.classList;c.toggle('dk',S.theme===1);c.toggle('hc',S.theme===2);c.toggle('dys',S.dys);c.toggle('calm',S.calm);c.toggle('xl',S.xl)}
+function panel(){
+  const t=(a,l,v)=>`<button class="b" data-act="${a}" aria-pressed="${v}">${l}: ${v?'ligado':'desligado'}</button>`;
+  $('#panel').innerHTML=`<div class="box"><h2 id="ph" tabindex="-1">Acessibilidade</h2>
+  <div class="row"><button class="b" data-act="sm" aria-label="Diminuir letras">A−</button><span>Letras: ${Math.round(S.size*100)}%</span><button class="b" data-act="lg" aria-label="Aumentar letras">A+</button></div>
+  <button class="b" data-act="theme">Tema: ${TH[S.theme]} (trocar)</button>
+  ${t('dys','Fonte e espaçamento para dislexia',S.dys)}${t('xl','Botões extra grandes',S.xl)}${t('calm','Sem animações',S.calm)}${t('snd','Sons',S.sound)}${t('vib','Vibração',S.vib)}
+  ${t('tts','Ler em voz alta',S.tts)}${t('scan','Varredura automática (1 botão)',S.scan)}
+  <button class="b" data-act="spd">Velocidade da varredura: ${S.speed} segundos</button>
+  <button class="b pri" data-act="close">Fechar</button></div>`}
+function openP(){po=true;$('#panel').hidden=false;panel();$('#ph').focus();restartScan()}
+function closeP(){po=false;$('#panel').hidden=true;$('[data-act="panel"]').focus();restartScan()}
+const setA={sm:()=>S.size=Math.max(.8,Math.round((S.size-.1)*10)/10),lg:()=>S.size=Math.min(1.8,Math.round((S.size+.1)*10)/10),
+  theme:()=>S.theme=(S.theme+1)%3,dys:()=>S.dys=!S.dys,xl:()=>S.xl=!S.xl,calm:()=>S.calm=!S.calm,snd:()=>S.sound=!S.sound,vib:()=>S.vib=!S.vib,
+  tts:()=>{S.tts=!S.tts;if(!S.tts&&'speechSynthesis' in window)speechSynthesis.cancel()},scan:()=>S.scan=!S.scan,
+  spd:()=>S.speed=speeds[(speeds.indexOf(S.speed)+1)%speeds.length]};
+
+/* Varredura automática (jogar com 1 botão) */
+let si=-1,st=null;
+function items(){const r=po?'#panel':'header, main';return $$(r).flatMap(n=>[...n.querySelectorAll('button:not(:disabled)')]).filter(b=>b.offsetParent&&b.getAttribute('aria-disabled')!=='true')}
+function step(){const it=items();if(!it.length)return;$$('.scan').forEach(x=>x.classList.remove('scan'));si=(si+1)%it.length;const b=it[si];b.classList.add('scan');b.scrollIntoView({block:'nearest'});speak(b.getAttribute('aria-label')||b.textContent.trim())}
+function restartScan(){clearInterval(st);$$('.scan').forEach(x=>x.classList.remove('scan'));if(!S.scan)return;si=-1;step();st=setInterval(step,S.speed*1000)}
+function pick(){const b=items()[si];if(b)b.click()}
+
+/* Eventos */
+const A={full:()=>{const d=document;if(!d.fullscreenEnabled){say('Neste aparelho, abra o menu do navegador e escolha "Adicionar à tela inicial" para usar em tela cheia.');return}d.fullscreenElement?d.exitFullscreen():d.documentElement.requestFullscreen().catch(()=>{})},rps:startRps,puz:startPuz,num:startNum,menu,velha:startVelha,vmode:()=>{vm=vm?0:1;startVelha()},mem:startMem,forca:startForca,genius:startGen,quiz:startQuiz,next,panel:openP,close:closeP,greplay:()=>{if(gs.length&&!gb)play()}};
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button[data-act]');
+  if(!b){if(S.scan)pick();return}
+  const a=b.dataset.act,d=b.dataset;
+  if(b.getAttribute('aria-disabled')==='true')return;
+  if(setA[a]){setA[a]();save();apply();panel();const n=$('#panel [data-act="'+a+'"]');n&&n.focus();restartScan();return}
+  if(A[a])A[a]();else if(a==='cell')cell(+d.i);else if(a==='card')flip(+d.i);else if(a==='key')guess(d.c);else if(a==='pad')pad(+d.i);else if(a==='ans')ans(+d.i);else if(a==='rp')rp(+d.i);else if(a==='tile')tile(+d.i);else if(a==='nok')guessN();else if(a==='nd'){const n=$('#ni');n.value=Math.min(50,Math.max(1,(+n.value||25)+ +d.d))}});
+document.addEventListener('submit',e=>{e.preventDefault();guessN()});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&po){closeP();return}
+  if(S.scan&&(e.key===' '||e.key==='Enter')){e.preventDefault();pick();return}
+  if(e.key==='Tab'&&po){const it=items();if(!it.length)return;const f=it.indexOf(document.activeElement);
+    if(e.shiftKey&&f<=0){e.preventDefault();it[it.length-1].focus()}else if(!e.shiftKey&&f===it.length-1){e.preventDefault();it[0].focus()}}
+  if(S.scan||po||e.ctrlKey||e.altKey||e.metaKey||e.target.tagName==='INPUT')return;
+  if(game==='puz'&&e.key.startsWith('Arrow')){const z=sp.indexOf(0),r=z/3|0,c=z%3,t={ArrowLeft:c<2?z+1:-1,ArrowRight:c>0?z-1:-1,ArrowUp:r<2?z+3:-1,ArrowDown:r>0?z-3:-1}[e.key];if(t>=0){e.preventDefault();tile(t)}return}
+  if(/^[1-9]$/.test(e.key)){const b=document.querySelector('[data-n="'+e.key+'"]');if(b&&!b.disabled)b.click()}
+  else if(game==='forca'&&/^[a-z]$/i.test(e.key))guess(e.key.toUpperCase())});
+document.addEventListener('keyup',e=>{if(S.scan&&e.key===' ')e.preventDefault()});
+
+apply();menu();
+</script>
+</body>
+</html>
